@@ -656,6 +656,8 @@ pub enum CompileError {
         method_name: String,
         as_traits: Vec<String>,
     },
+    #[error("Provided generic type is not of type str.")]
+    NonStrGenericType { span: Span },
     #[error("A contract method cannot call methods belonging to the same ABI")]
     ContractCallsItsOwnMethod { span: Span },
 }
@@ -831,6 +833,7 @@ impl Spanned for CompileError {
             TraitImplPayabilityMismatch { span, .. } => span.clone(),
             ConfigurableInLibrary { span } => span.clone(),
             MultipleApplicableItemsInScope { span, .. } => span.clone(),
+            NonStrGenericType { span } => span.clone(),
             CannotBeEvaluatedToConst { span } => span.clone(),
             ContractCallsItsOwnMethod { span } => span.clone(),
         }
